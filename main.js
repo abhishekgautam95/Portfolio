@@ -33,14 +33,31 @@ contactMenu.addEventListener('click', () => {
   scrollIntoView('#contact');
 });
 
-function scrollIntoView(selector) {
-  const scrollTo = document.querySelector(selector);
-  scrollTo.scrollIntoView({behavior: "smooth"});
-}
-
 // 스크롤을 내렸을 때 Home 화면 투명화
 const home = document.querySelector('.home__container');
 const homeHeight = home.getBoundingClientRect().height;
 document.addEventListener('scroll', () => {
   home.style.opacity = 1 - window.scrollY / homeHeight;
 });
+
+// 스크롤하면 화살표 버튼 보이기
+const arrowUp = document.querySelector('.arrow-up');
+document.addEventListener('scroll', () => {
+  if(window.scrollY > homeHeight/2) {
+    arrowUp.classList.add('visible');
+  } else {
+    arrowUp.classList.remove('visible');
+
+  }
+});
+
+// 화살표 버튼 클릭하면 맨 위로 이동
+
+arrowUp.addEventListener('click', () => {
+  scrollIntoView('#home');
+});
+
+function scrollIntoView(selector) {
+  const scrollTo = document.querySelector(selector);
+  scrollTo.scrollIntoView({behavior: "smooth"});
+}
