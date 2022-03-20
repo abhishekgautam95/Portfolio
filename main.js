@@ -5,8 +5,8 @@
 const navbar = document.querySelector('#navbar');
 const navbarHeight = navbar.getBoundingClientRect().height;
 document.addEventListener('scroll', () => {
-  console.log(window.scrollY);
-  console.log(`navbar: ${navbarHeight}`);
+  // console.log(window.scrollY);
+  // console.log(`navbar: ${navbarHeight}`);
   if(window.scrollY > navbarHeight) {
     navbar.classList.add('navbar--dark');
   } else {
@@ -28,7 +28,7 @@ navbarMenu.addEventListener('click', (event) => {
 
 // Contact me 버튼을 눌렀을 때 해당 메뉴로 스크롤
 const contactMenu = document.querySelector('.home__container .home__contact'); 
-console.log(contactMenu);
+// console.log(contactMenu);
 contactMenu.addEventListener('click', () => {
   scrollIntoView('#contact');
 });
@@ -37,3 +37,10 @@ function scrollIntoView(selector) {
   const scrollTo = document.querySelector(selector);
   scrollTo.scrollIntoView({behavior: "smooth"});
 }
+
+// 스크롤을 내렸을 때 Home 화면 투명화
+const home = document.querySelector('.home__container');
+const homeHeight = home.getBoundingClientRect().height;
+document.addEventListener('scroll', () => {
+  home.style.opacity = 1 - window.scrollY / homeHeight;
+});

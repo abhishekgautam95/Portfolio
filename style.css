@@ -166,8 +166,12 @@ p {
   padding: 40px;
   padding-top: 150px;
   text-align: center;
+  transition: all var(--animation-duration) ease-in;
 }
 
+#home.home-opacity {
+  opacity: 1;
+}
 .home__avatar {
   width: 250px;
   height: 250px;
