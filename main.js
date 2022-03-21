@@ -17,9 +17,12 @@ document.addEventListener('scroll', () => {
 // 메뉴를 클릭했을 때 해당 메뉴로 스크롤
 // event.target -> 현재 이벤트가 발생한 요소를 반환
 const navbarMenu = document.querySelector('.navbar__menu'); // div.navbar__menu
+// console.log(navbarMenu);
 navbarMenu.addEventListener('click', (event) => {
   const target = event.target; //li 중 이벤트가 발생한 li 요소를 target 변수에 저장
+  // console.log(target);
   const link = target.dataset.link; // li 요소의 link 속성을 link 변수에 저장
+  // console.log(link);
   if(link == undefined) {
     return;
   }
@@ -47,17 +50,57 @@ document.addEventListener('scroll', () => {
     arrowUp.classList.add('visible');
   } else {
     arrowUp.classList.remove('visible');
-
   }
 });
 
 // 화살표 버튼 클릭하면 맨 위로 이동
-
 arrowUp.addEventListener('click', () => {
   scrollIntoView('#home');
 });
+
+// 버튼을 클릭했을 때 필터링
+const workBtnContainer = document.querySelector('.work__categories');
+const projectContainer = document.querySelector('.work__projects');
+const projects = document.querySelectorAll('.project');
+console.log(workBtnContainer);
+console.log(projectContainer);
+console.log(projects);
+workBtnContainer.addEventListener('click', (e) => {
+  const target = e.target;
+  console.log(target);
+  // button이 아니라 span이 클릭이 됐을 때 span의 부모노드(버튼)의 데이터셋의 btn 속성을 filter에 저장
+  const filter = target.dataset.btn || e.target.parentNode.dataset.btn;
+  if(filter == null) {
+    return;
+  }
+  projectContainer.classList.add('animation-out');
+  // 8개의 a태그 즉, 8개의 프로젝트를 반복을 통해서 project라는 리스트 type으로 저장
+  projects.forEach((project) => {
+    // console.log(project.dataset.type);
+    // button 태그의 btn 속성과 a 태그의 type 속성을 비교해서 같으면 class에 visible 삭제
+    if(filter === 'all' || filter === project.dataset.type) {
+      project.classList.remove('invisible');
+    } else {
+      project.classList.add('invisible');
+
+    }
+  });
+
+  // animation-out이 계속 남아 있으면 css에서 opacity가 0이어서 보이지 않는다.
+  // 따라서 일정시간이 지나면 animation-out을 제거해야 한다.
+  setTimeout(() => {
+    projectContainer.classList.remove('animation-out');
+  }, 300);
+
+
+});
+
+
+
 
 function scrollIntoView(selector) {
   const scrollTo = document.querySelector(selector);
   scrollTo.scrollIntoView({behavior: "smooth"});
 }
+
+
