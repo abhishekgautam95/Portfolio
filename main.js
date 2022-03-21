@@ -26,8 +26,16 @@ navbarMenu.addEventListener('click', (event) => {
   if(link == undefined) {
     return;
   }
+  navbarMenu.classList.remove('open');
   scrollIntoView(link);
 });
+
+// navbar 메뉴 버튼 틀릭시 나타내기
+const navbarToggleBtn = document.querySelector('.navbar__toggle-btn');
+navbarToggleBtn.addEventListener('click', () => {
+  navbarMenu.classList.toggle('open');
+});
+
 
 // Contact me 버튼을 눌렀을 때 해당 메뉴로 스크롤
 const contactMenu = document.querySelector('.home__container .home__contact'); 
@@ -35,6 +43,7 @@ const contactMenu = document.querySelector('.home__container .home__contact');
 contactMenu.addEventListener('click', () => {
   scrollIntoView('#contact');
 });
+
 
 // 스크롤을 내렸을 때 Home 화면 투명화
 const home = document.querySelector('.home__container');
@@ -62,17 +71,25 @@ arrowUp.addEventListener('click', () => {
 const workBtnContainer = document.querySelector('.work__categories');
 const projectContainer = document.querySelector('.work__projects');
 const projects = document.querySelectorAll('.project');
+
 console.log(workBtnContainer);
 console.log(projectContainer);
 console.log(projects);
+
 workBtnContainer.addEventListener('click', (e) => {
-  const target = e.target;
-  console.log(target);
   // button이 아니라 span이 클릭이 됐을 때 span의 부모노드(버튼)의 데이터셋의 btn 속성을 filter에 저장
-  const filter = target.dataset.btn || e.target.parentNode.dataset.btn;
+  const filter = e.target.dataset.btn || e.target.parentNode.dataset.btn;
   if(filter == null) {
     return;
   }
+
+  // 이전에 선택된 버튼 제거
+  const active = document.querySelector('.category__btn.selected');
+  active.classList.remove('selected');
+  const target = e.target.nodeName === 'BUTTON' ? e.target : e.target.parentNode;
+  console.log(target);
+  e.target.classList.add('selected');
+
   projectContainer.classList.add('animation-out');
   // 8개의 a태그 즉, 8개의 프로젝트를 반복을 통해서 project라는 리스트 type으로 저장
   projects.forEach((project) => {
